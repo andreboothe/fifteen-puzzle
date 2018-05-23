@@ -37,30 +37,66 @@ html,body{
     border: 10px solid rgba(150, 150, 150, 1);
     box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
     height: 500px;
-    width: 500px;
-    /* box-shadow: 5px 5px 5px inset; */
-    border-radius: 5%;
+    width: 485px;
+    border-radius: 1%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     flex-wrap: wrap;
     margin:0;
     padding:0;
     background: 
-    linear-gradient(0deg,rgba(0,0,0,1),rgba(0,0,0,0) 10%),
-    linear-gradient(90deg,rgba(0,0,0,1),rgba(0,0,0,0) 10%),
-    linear-gradient(180deg,rgba(0,0,0,1),rgba(0,0,0,0) 10%),
-    linear-gradient(-90deg,rgba(0,0,0,1),rgba(0,0,0,0) 10%),
-    radial-gradient(rgb(192,192,192,1), rgb(192,192,192,1)) !important;
+        linear-gradient(90deg,rgba(0, 0, 0, .5),rgba(0, 0, 0, 0) 8%),
+        linear-gradient(180deg,rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0) 8%),
+        linear-gradient(0deg,rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0) 8%),
+        linear-gradient(-90deg,rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0) 0%),
+        radial-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+        
     
 }
 
 .grid{
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0);
+    align-items: flex-start;
+    justify-content: flex-start;
+    background: rgba(100, 100, 100, 1);
+    /* border-top: 1px solid rgba(0, 0, 0, .7); */
+    border: 1px solid rgba(0, 0, 0, .15);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.7) inset;
+    padding: 0;
+    margin-left:1em;
+    margin-right: .5em;
+    
+}
+
+.game-board::before{
+    content:"";
+    position:relative;
+    border-top: 21px solid rgba(0, 0, 0, .2);
+	border-left: 16px solid transparent;
+	border-right: 9px solid transparent;
+	height: 0;
+    width: 500px;
+    
+    /* transform: rotate(180deg);
+    transform-origin: center center;  */
+    margin:0;
+}
+
+
+.game-board::after{
+    content:"";
+    position:relative;
+    border-top:  21px solid rgba(0, 0, 0, .1);
+	border-left: 9px solid transparent;
+	border-right: 16px solid transparent;
+	height: 0;
+    width: 500px;
+    
+    transform: rotate(180deg);
+    transform-origin: center center; 
+    margin:0;
 }
 
 .cell{
@@ -81,7 +117,9 @@ html,body{
 
 
 .empty-cell{
-    background: white;
+    background: none;
+    border: 0;
+    box-shadow: none;
 }
 
 .bottom{
@@ -90,6 +128,7 @@ html,body{
     text-align: center;
     margin-top: 20px;
 }
+
 .btn{
     text-align: center;
     border-radius: 20%;
@@ -99,9 +138,23 @@ html,body{
     box-shadow: 2px 2px 5px black;
     background: rgba(200, 200, 200, .75);
 }
+
 button:focus {
     outline:0;
 }
+
+
+.moveable{
+    transition: all 500ms ;
+    transform: scale(1.1);
+}
+
+.normal-cell{
+    transition: all 500ms;
+    transform: scale(1);  
+}
+
+
 
 
 @media (max-width:550px){
@@ -110,7 +163,7 @@ button:focus {
     }
     .game-board{
         height: 300px;
-        width: 300px;
+        width: 285px;
     }    
 
     .cell{
