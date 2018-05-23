@@ -3,7 +3,7 @@ let puzzle = document.querySelectorAll('.cell');
 let winNodeList = [];
 let backPiece = [];
 let matrix = [];
-
+let shuffled = false;
 const shuffleBtn = document.querySelector('#shuffle');
 
 
@@ -34,9 +34,6 @@ const loadPuzzle = () => {
     copyNodes();
     
 }
-
-
-
 
 //converts a node list to its 4 x 4 matrix equivalent
 const to4x4Matrix = (nodeList) => {
@@ -122,17 +119,20 @@ const diff = (a, b) => {
 
 //returns true or false if a pieces is moveable
 const isMoveAble = (fourByFour, node) => {
-    let emptyIndex = emptyCellIndex(fourByFour);
-    let nodeIndex = cellfourByFourIndex(fourByFour, node);
+    if(shuffled){
+        let emptyIndex = emptyCellIndex(fourByFour);
+        let nodeIndex = cellfourByFourIndex(fourByFour, node);
 
-    let rowAdjacent = (diff(emptyIndex[0],nodeIndex[0]) == 1)?true: false;
-    let colAdjacent = (diff(emptyIndex[1],nodeIndex[1]) == 1)?true: false;
-    // debugger;
-    let rowSame = (diff(emptyIndex[0],nodeIndex[0]) == 0)?true: false;
-    let colSame = (diff(emptyIndex[1],nodeIndex[1]) == 0)?true: false;
+        let rowAdjacent = (diff(emptyIndex[0],nodeIndex[0]) == 1)?true: false;
+        let colAdjacent = (diff(emptyIndex[1],nodeIndex[1]) == 1)?true: false;
+        // debugger;
+        let rowSame = (diff(emptyIndex[0],nodeIndex[0]) == 0)?true: false;
+        let colSame = (diff(emptyIndex[1],nodeIndex[1]) == 0)?true: false;
 
-    return (rowAdjacent && colSame)?true:
-            (colAdjacent && rowSame)?true:false;
+        return (rowAdjacent && colSame)?true:
+                (colAdjacent && rowSame)?true:false;
+    }
+    
 }
 
 //swaps pieces if cell is moveable
@@ -156,13 +156,17 @@ const moveCell = () => {
 //
 const reform = () => {
     puzzle = document.querySelectorAll('.cell');
-    puzzle.forEach( cell => cell.addEventListener('click', moveCell) );
+    puzzle.forEach( cell => {
+        cell.addEventListener('click', moveCell);
+        cell.addEventListener('mouseenter', hoverEffect);
+        cell.addEventListener('mouseleave', noHover);
+    });
     matrix = to4x4Matrix(puzzle);
 }
 
 //
 const shufflePuzzle = () => {
-    
+    shuffled = true;
     for (let i = puzzle.length - 1; i > 0; i--) {
         
         const j = Math.floor(Math.random() * i );
@@ -172,20 +176,50 @@ const shufflePuzzle = () => {
     }
 
     reform();
+    
 }
 
 //
 const winningCondition = () => {
-    console.log(puzzle[0].textContent);
-    for(let i = 0; i < puzzle.length - 1; i++){
-        
-        //let number = puzzle[i].textContent;
-        //console.log(number);
-        if(puzzle[i].textContent != i + 1 ) return false;
+    
+    if(shuffled){
+        for(let i = 0; i < puzzle.length - 1; i++){
+            if(puzzle[i].textContent != i + 1 ) return false;
+        }
+        return true;
     }
-    return true;
+    return false;
 }
 
+let hoverInterval = null;
+//applies hover effect to cells
+const hoverEffect = () =>{
+    const cell = event.target;
+    if(isMoveAble(matrix,cell))
+    {   
+        hoverInterval = setInterval( () => {
+            cell.classList.replace('normal-cell', 'moveable');
+            hoverTimeout = setTimeout(() => cell.classList.replace('moveable', 'normal-cell') ,500);
+        }, 1000);
+        
+    } 
+    
+}
+
+// removes hover effect from a moveable cell
+const noHover = () => {
+    const cell = event.target;
+    clearInterval(hoverInterval);
+    if(cell.classList.contains('moveable')) cell.classList.replace('moveable', 'normal-cell');
+    
+}
+
+//event listeners
 window.addEventListener("load", loadPuzzle);
-puzzle.forEach( cell => cell.addEventListener('click', moveCell) );
+puzzle.forEach( cell => {
+    cell.addEventListener('click', moveCell);
+    cell.addEventListener('mouseenter', hoverEffect);
+    cell.addEventListener('mouseleave', noHover);
+});
+
 shuffleBtn.addEventListener('click', shufflePuzzle);
