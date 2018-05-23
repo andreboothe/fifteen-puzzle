@@ -35,7 +35,7 @@ html,body{
 }
 .game-board{
     border: 10px solid rgba(150, 150, 150, 1);
-    box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.7);
     height: 500px;
     width: 485px;
     border-radius: 1%;
