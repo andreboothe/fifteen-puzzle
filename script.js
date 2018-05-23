@@ -8,12 +8,23 @@ const shuffleBtn = document.querySelector('#shuffle');
 
 
 const loadPuzzle = () => {
-    let row = 0, right = 0, top = 0;
+   
+    if(window.innerWidth > 550){
+        imageDivider(100);
+    }
+    else{
+        
+        imageDivider(90);
+    }
+    
+    matrix = to4x4Matrix(puzzle);
+    copyNodes();
+    
+}
 
+const imageDivider = (modder) => {
+    let row = 0, right = 0, top = 0;
     for (let i = 0;i < puzzle.length-1; i++){
-        puzzle[i].classList.add("cell");
-        puzzle[i].style.float = "left";
-        puzzle[i].style.backgroundSize = "400px 400px";
         
         backPiece[i] = [];
         backPiece[i][0] = right;
@@ -23,17 +34,13 @@ const loadPuzzle = () => {
         row ++;
         if (row === 4)
         {
-            top += 100; right = 0; row = 0; 
+            top += modder; right = 0; row = 0; 
         } 
         else {
-            right +=100
+            right +=modder
         }
     }
-    
-    matrix = to4x4Matrix(puzzle);
-    copyNodes();
-    
-}
+}   
 
 //converts a node list to its 4 x 4 matrix equivalent
 const to4x4Matrix = (nodeList) => {
