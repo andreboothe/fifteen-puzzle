@@ -185,3 +185,32 @@ button:focus {
         box-shadow: none;
     }
 }
+
+
+@media (max-width:400px){
+    .title{
+        font-size: 325%;
+    }
+    .game-board{
+        height: 300px;
+        width: 300px;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }    
+
+    .cell{
+        
+        background-size: 300px 300px; 
+        height: 56px;
+        width: 60px;
+        line-height: 56px;
+        font-size: 100%;   
+        margin: 2px;
+    }
+
+    .empty-cell{
+        background: none;
+        border: 0;
+        box-shadow: none;
+    }
+}

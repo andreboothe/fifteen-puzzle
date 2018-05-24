@@ -12,9 +12,12 @@ const loadPuzzle = () => {
     if(window.innerWidth > 550){
         imageDivider(100);
     }
-    else{
+    else if (window.innerWidth > 400){
         
         imageDivider(90);
+    }
+    else if (window.innerWidth >= 300){
+        imageDivider(60);
     }
     
     matrix = to4x4Matrix(puzzle);
